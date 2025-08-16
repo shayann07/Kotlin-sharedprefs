@@ -1,45 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/login"
+    android:id="@+id/signup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".MainActivity">
-    <!-- Login Page -->
+    tools:context=".SignUpActivity">
 
-    <TextView
-        android:id="@+id/tvwelcomeback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:layout_marginVertical="45dp"
-        android:text="WELCOME BACK !"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-    <!-- Login your Account -->
-    <TextView
-        android:id="@+id/tvloginacc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvwelcomeback"
-        android:paddingStart="28dp"
-        android:text="Login to your Account"
-        android:textColor="#524E4E"
-        android:textSize="18dp"
-        android:textStyle="bold" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/emailcv"
+    <!-- Sign Up Page -->
+    <LinearLayout
+        android:id="@+id/LL1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvloginacc"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="45dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/backbtn"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@drawable/ic_back_arrow"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/tvsu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!-- Create Account  -->
+    <TextView
+        android:id="@+id/tvnewacc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LL1"
+        android:layout_marginHorizontal="28dp"
+        android:text="Create your Account"
+        android:textColor="#524E4E"
+        android:textSize="18dp"
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CV1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvnewacc"
         android:layout_gravity="center"
         android:layout_marginHorizontal="28dp"
-        android:layout_marginVertical="18dp"
+        android:layout_marginVertical="8dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
+
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/ed_bg"
+            android:hint="Name"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/Hintcolor"
+            android:textSize="16sp" />
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CV2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/CV1"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginVertical="8dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp">
@@ -55,14 +92,14 @@
             android:textColorHint="@color/Hintcolor"
             android:textSize="16sp" />
     </androidx.cardview.widget.CardView>
-
     <androidx.cardview.widget.CardView
-        android:id="@+id/passwordcv"
+        android:id="@+id/CV3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/emailcv"
+        android:layout_below="@+id/CV2"
         android:layout_gravity="center"
         android:layout_marginHorizontal="28dp"
+        android:layout_marginVertical="8dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp">
@@ -72,34 +109,54 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/ed_bg"
-            android:hint="Password"
+            android:hint="Enter Password"
             android:padding="12dp"
             android:textColor="@color/black"
             android:textColorHint="@color/Hintcolor"
             android:textSize="16sp" />
     </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CV4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/CV3"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginVertical="8dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/ed_bg"
+            android:hint="Confirm Password"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/Hintcolor"
+            android:textSize="16sp" />
+    </androidx.cardview.widget.CardView>
     <Button
-        android:id="@+id/btnSignIn"
+        android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:layout_below="@+id/passwordcv"
+        android:layout_below="@+id/CV4"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/Btnblue"
         android:elevation="4dp"
-        android:text="Sign In"
+        android:text="Sign Up"
         android:textColor="@android:color/white"
         android:textStyle="bold" />
-
     <TextView
         android:id="@+id/tvsigninwith"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnSignIn"
+        android:layout_below="@+id/btnSignUp"
         android:layout_centerInParent="true"
         android:layout_marginTop="60dp"
-        android:text="- or sign in with - "
+        android:text="- or sign up with - "
         android:textSize="14sp" />
 
     <LinearLayout
@@ -168,35 +225,6 @@
                 android:contentDescription="Twitter"
                 android:src="@drawable/ic_twitter" />
         </androidx.cardview.widget.CardView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ll1"
-        android:layout_centerInParent="true"
-        android:layout_marginVertical="25dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvnoacc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Don't have an account?"
-            android:textSize="17sp" />
-
-        <TextView
-            android:id="@+id/tvsignup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="Sign up"
-            android:textColor="#2640CE"
-            android:textSize="17sp"
-            android:clickable="true"
-            android:focusable="true"/>
 
     </LinearLayout>
 
