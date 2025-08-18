@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kotlin_sharedprefs.SharedPrefs.init
 import com.example.kotlin_sharedprefs.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
@@ -18,7 +17,7 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        init(this)
+        val sharedPrefs = SharedPrefs(this)
 
         binding.btnSignUp.setOnClickListener {
             val usernameString = binding.etUsername.text.toString().trim()
@@ -31,8 +30,8 @@ class SignUpActivity : AppCompatActivity() {
             }
 
             val user = UserModel(usernameString, emailString, passwordString)
-            SharedPrefs.saveUser(user)
-            SharedPrefs.setIsLoggedIn(false)
+            sharedPrefs.saveUser(user)
+            sharedPrefs.setIsLoggedIn(false)
 
             Toast.makeText(this, "Sign Up Successful! Please login.", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, MainActivity::class.java))

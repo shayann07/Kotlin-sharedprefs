@@ -4,17 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 
-object SharedPrefs {
+class SharedPrefs(context: Context) {
     private val PREF_NAME = "MyPreferences"
     private val KEY_USER = "user_data"
     private val IS_LOGGED_IN = "isLoggedIn"
 
-    private lateinit var sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     private val gson = Gson()
-
-    fun init(context: Context) {
-        sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-    }
 
 
     fun saveUser(user: UserModel) {

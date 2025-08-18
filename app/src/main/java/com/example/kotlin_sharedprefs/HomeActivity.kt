@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.kotlin_sharedprefs.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -16,8 +14,8 @@ class HomeActivity : AppCompatActivity() {
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val saveUser = SharedPrefs.getUser()
+        val sharedPrefs = SharedPrefs(this)
+        val saveUser = sharedPrefs.getUser()
         if (saveUser != null) {
             binding.tvRecieved.text = "WELCOME " + saveUser.username + "!"
         } else {
@@ -25,8 +23,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         binding.btnLogout.setOnClickListener {
-            SharedPrefs.setIsLoggedIn(false)
-            SharedPrefs.clear()
+            sharedPrefs.setIsLoggedIn(false)
+            sharedPrefs.clear()
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

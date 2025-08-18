@@ -5,10 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.kotlin_sharedprefs.SharedPrefs.init
-import com.example.kotlin_sharedprefs.databinding.ActivityHomeBinding
 import com.example.kotlin_sharedprefs.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,9 +13,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        init(this)
+        val sharedPrefs = SharedPrefs(this)
 
-        if (SharedPrefs.isLoggedIn()) {
+        if (sharedPrefs.isLoggedIn()) {
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }
@@ -28,10 +24,10 @@ class MainActivity : AppCompatActivity() {
             val inputEmail = binding.etEmail.text.toString().trim()
             val inputPassword = binding.etPassword.text.toString().trim()
 
-            val saveUser = SharedPrefs.getUser()
+            val saveUser = sharedPrefs.getUser()
 
             if (saveUser != null && inputEmail == saveUser.email && inputPassword == saveUser.password) {
-                SharedPrefs.setIsLoggedIn(true)
+                sharedPrefs.setIsLoggedIn(true)
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
