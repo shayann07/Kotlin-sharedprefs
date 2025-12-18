@@ -38,3 +38,4 @@ This is a simple Android sample application that demonstrates how to persist sma
 This project is licensed under the MIT License. Feel free to use the code as a starting point for your own applications.
 <!-- commit 1 -->
 <!-- commit 2 -->
+<!-- commit 3 -->
