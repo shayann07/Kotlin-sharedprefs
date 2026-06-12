@@ -1,45 +1,71 @@
-# Kotlin SharedPrefs
+# Kotlin-sharedprefs
 
-This is a simple Android sample application that demonstrates how to persist small amounts of data using **SharedPreferences** in Kotlin. The project shows how to serialize and deserialize a data class to store user settings or other key–value pairs in a type-safe way.
+Educational Kotlin Android sample showing how to persist a small user record across app launches with `SharedPreferences`. The user object is serialized as JSON via Gson, and an `isLoggedIn` flag drives a one-shot auto-redirect from the launcher screen.
 
-## Features
+## What It Does
 
-- Illustrates how to define a Kotlin data class to represent your preferences.
-- Shows how to write extension functions to save and retrieve the data class to and from SharedPreferences.
-- Provides a basic UI for entering and updating preference values.
-- Demonstrates reading the stored preferences when the app starts.
+- **`MainActivity`** (launcher) — On start, if `isLoggedIn` is `true` it skips straight to `HomeActivity`. Otherwise it shows email/password fields and a "Sign In" button. The button compares the typed values against the stored `UserModel` (read back via Gson). On match it sets `isLoggedIn = true` and goes to `HomeActivity`; otherwise it shows an "Invalid credentials" toast. A "Sign Up" link opens `SignUpActivity`.
+- **`SignUpActivity`** — Username/email/password fields and a "Sign Up" button. All three must be non-empty (only emptiness is checked). On submit it builds a `UserModel`, writes it via `SharedPrefs.saveUser`, sets `isLoggedIn = false`, and navigates back to `MainActivity` to log in.
+- **`HomeActivity`** — Reads the stored user and shows `"WELCOME <username>!"`. The "Logout" button clears `SharedPreferences` and returns to `MainActivity`.
 
-## Getting started
+`SharedPrefs` (a regular class, not extension functions on `Context`) wraps the `MyPreferences` file with `MODE_PRIVATE` and exposes `saveUser`, `getUser`, `setIsLoggedIn`, `isLoggedIn`, and `clear`. Gson handles the `UserModel` ↔ JSON conversion.
 
-1. **Clone the repository** and open the project in Android Studio.
+## Project Layout
 
-   ```bash
-   git clone https://github.com/shayann07/Kotlin-sharedprefs.git
-   cd Kotlin-sharedprefs
-   ```
+```
+app/
+  src/
+    main/
+      AndroidManifest.xml
+      java/com/example/kotlin_sharedprefs/
+        MainActivity.kt        # email/password sign-in + auto-redirect
+        SignUpActivity.kt      # creates and stores the UserModel
+        HomeActivity.kt        # welcome screen + logout
+        SharedPrefs.kt         # Gson-backed SharedPreferences wrapper
+        UserModel.kt           # data class (username, email, password)
+      res/layout/
+        activity_main.xml
+        activity_sign_up.xml
+        activity_home.xml
+build.gradle.kts
+settings.gradle.kts
+```
 
-2. **Sync and build**
+## Tech Stack
 
-   Android Studio should automatically download the necessary Gradle dependencies. Once synced, you can build and run the app on an emulator or physical device.
+- Kotlin, JVM target `11`.
+- Android Gradle Plugin via `libs.versions.toml` (Kotlin DSL `build.gradle.kts`).
+- `compileSdk 36`, `minSdk 24`, `targetSdk 36`.
+- AndroidX `core-ktx`, `appcompat`, `activity`, `constraintlayout`, Material Components.
+- `com.google.code.gson:gson:2.11.0` for JSON serialization.
+- View Binding (`buildFeatures.viewBinding = true`).
+- Namespace + applicationId: `com.example.kotlin_sharedprefs`.
 
-3. **Try it out**
+## Build / Run
 
-   Enter some values in the provided fields and save them. Relaunch the app to verify that your preferences are persisted using SharedPreferences.
+1. Open in Android Studio with AGP matching `gradle/libs.versions.toml`.
+2. Sync Gradle and let it download dependencies.
+3. Run on an emulator or device. The launcher activity is `MainActivity`.
 
-## Technologies used
+## Tests
 
-- **Kotlin** – concise and modern language for Android development.
-- **Android SDK** – app development framework.
-- **SharedPreferences** – Android API for saving simple key-value data.
-- **Jetpack libraries** – such as AppCompat for UI components.
+Only the default Android Studio stubs:
+
+- `ExampleUnitTest.kt` — JUnit `addition_isCorrect`.
+- `ExampleInstrumentedTest.kt` — instrumentation test asserting the package name.
+
+There is no automated coverage of the auth flow or `SharedPrefs`.
+
+## Honest Limitations
+
+- This is a learning sample, not a production auth system.
+- **The user's password is stored in clear text inside SharedPreferences.** SharedPreferences is not an appropriate place for credentials; use this only as a SharedPreferences/Gson teaching aid.
+- The "extension functions" wording sometimes used in earlier docs is not accurate — `SharedPrefs` is a regular class with member functions.
+- `HomeActivity` contains a bug: when no user record is found it calls `startActivity(Intent(this, HomeActivity::class.java))` instead of routing back to `MainActivity`, which restarts itself rather than navigating to login.
+- `SignUpActivity` only validates that fields are non-empty; there is no email format, password strength, or duplicate-account check.
+- `MainActivity.btnSignIn` does not handle the case where no user has been stored yet beyond the "Invalid credentials" branch.
+- There is no `LICENSE` file in the repository despite earlier README text claiming MIT licensing. The license status is **unspecified**.
 
 ## License
 
-This project is licensed under the MIT License. Feel free to use the code as a starting point for your own applications.
-<!-- commit 1 -->
-<!-- commit 2 -->
-<!-- commit 3 -->
-<!-- commit 4 -->
-<!-- commit 5 -->
-
-<!-- gitpulse:contribution index="6" timestamp="2026-05-03" -->
+No `LICENSE` file is present in the repository. Treat the licensing status as **unspecified** until one is added.
